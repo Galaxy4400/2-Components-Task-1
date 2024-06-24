@@ -59,9 +59,7 @@ export function App() {
 			</div>
 			<div className={css['list-container']}>
 				<h2 className={css['list-heading']}>Список:</h2>
-				{!list.length ? (
-					<p className={css['no-margin-text']}>Нет добавленных элементов</p>
-				) : (
+				{list.length ? (
 					<ul className={css['list']}>
 						{list.map((item) => (
 							<li className={css['list-item']} key={item.id}>
@@ -69,6 +67,8 @@ export function App() {
 							</li>
 						))}
 					</ul>
+				) : (
+					<p className={css['no-margin-text']}>Нет добавленных элементов</p>
 				)}
 			</div>
 		</div>
