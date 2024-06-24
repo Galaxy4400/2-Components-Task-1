@@ -1,14 +1,17 @@
 import { useState } from 'react';
 import styles from './app.module.css';
 
-export const App = () => {
+export function App() {
 	const [value, setValue] = useState('');
 	const [list, setList] = useState([]);
 	const [error, setError] = useState('');
-	const [isValueVaild, setIsValueVaild] = useState(false); // Я так и не понял как это сделать отдельной переменной. Или это и имелось в виду, что надо создать дополнительное состояние?
+	const [isValueVaild, setIsValueVaild] = useState(false); // Я так и не понял как это сделать отдельной переменной. При рендеринге она затирается. Или это и имелось в виду, что надо создать дополнительное состояние?
 
-	const onInputButtonClick = () => {
+
+	function onInputButtonClick() {
 		const promptValue = prompt();
+
+		if (!promptValue) return;
 
 		if (promptValue.length < 3) {
 			setIsValueVaild(false);
@@ -18,16 +21,31 @@ export const App = () => {
 			setValue(promptValue);
 			setError('');
 		}
-	};
+	}
 
-	const onAddButtonClick = () => {
+
+	function onAddButtonClick() {
 		if (value < 3) return;
 
-		setList([...list, { id: Date.now(), value }]);
+		setList([...list, createNewItem()]);
 		setError('');
 		setValue('');
 		setIsValueVaild(false);
 	};
+
+
+	function createNewItem() {
+		const now = new Date().toISOString();
+		const date = now.slice(0, 10).replaceAll('-', '.');
+		const time = now.slice(11, 19);
+
+		return {
+			id: Date.now(),
+			value,
+			date: `${date} ${time}`,
+		};
+	}
+
 
 	return (
 		<div className={styles['app']}>
@@ -51,7 +69,7 @@ export const App = () => {
 				) : (
 					<ul className={styles['list']}>
 						{list.map((item) => (
-							<li className={styles['list-item']} key={item.id}>{item.value}</li>
+							<li className={styles['list-item']} key={item.id}>{item.value} | {item.date}</li>
 						))}
 					</ul>
 				)}
