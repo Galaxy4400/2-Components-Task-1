@@ -5,8 +5,8 @@ export function App() {
 	const [value, setValue] = useState('');
 	const [list, setList] = useState([]);
 	const [error, setError] = useState('');
-	const [isValueVaild, setIsValueVaild] = useState(false); // Я так и не понял как это сделать отдельной переменной. При рендеринге она затирается. Или это и имелось в виду, что надо создать дополнительное состояние?
 
+	const isValueVaild = error !== '' && value !== '';
 
 	function onInputButtonClick() {
 		const promptValue = prompt();
@@ -14,11 +14,9 @@ export function App() {
 		if (!promptValue) return;
 
 		if (promptValue.length < 3) {
-			setIsValueVaild(false);
 			setValue('');
 			setError('Введенное значение должно содержать минимум 3 символа');
 		} else {
-			setIsValueVaild(true);
 			setValue(promptValue);
 			setError('');
 		}
@@ -31,7 +29,6 @@ export function App() {
 		setList([...list, createNewItem()]);
 		setError('');
 		setValue('');
-		setIsValueVaild(false);
 	};
 
 
