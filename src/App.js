@@ -15,6 +15,7 @@ export function App() {
 
 		if (promptValue.length < 3) {
 			setIsValueVaild(false);
+			setValue('');
 			setError('Введенное значение должно содержать минимум 3 символа');
 		} else {
 			setIsValueVaild(true);
