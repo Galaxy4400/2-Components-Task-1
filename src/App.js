@@ -1,12 +1,12 @@
 import { useState } from 'react';
-import styles from './app.module.css';
+import css from './app.module.css';
 
 export function App() {
 	const [value, setValue] = useState('');
 	const [list, setList] = useState([]);
 	const [error, setError] = useState('');
 
-	const isValueVaild = error !== '' && value !== '';
+	const isValueVaild = error === '' && value !== '';
 
 	function onInputButtonClick() {
 		const promptValue = prompt();
@@ -22,15 +22,13 @@ export function App() {
 		}
 	}
 
-
 	function onAddButtonClick() {
 		if (value < 3) return;
 
 		setList([...list, createNewItem()]);
 		setError('');
 		setValue('');
-	};
-
+	}
 
 	function createNewItem() {
 		const now = new Date().toISOString();
@@ -44,34 +42,35 @@ export function App() {
 		};
 	}
 
-
 	return (
-		<div className={styles['app']}>
-			<h1 className={styles['page-heading']}>Ввод значения</h1>
-			<p className={styles['no-margin-text']}>
-				Текущее значение <code>value</code>: "<output className={styles['current-value']}>{value}</output>"
+		<div className={css['app']}>
+			<h1 className={css['page-heading']}>Ввод значения</h1>
+			<p className={css['no-margin-text']}>
+				Текущее значение <code>value</code>: "<output className={css['current-value']}>{value}</output>"
 			</p>
-			{error !== '' && <div className={styles['error']}>{error}</div>}
-			<div className={styles['buttons-container']}>
-				<button className={styles['button']} onClick={onInputButtonClick}>
+			{error !== '' && <div className={css['error']}>{error}</div>}
+			<div className={css['buttons-container']}>
+				<button className={css['button']} onClick={onInputButtonClick}>
 					Ввести новое
 				</button>
-				<button className={styles['button']} onClick={onAddButtonClick} disabled={!isValueVaild}>
+				<button className={css['button']} onClick={onAddButtonClick} disabled={!isValueVaild}>
 					Добавить в список
 				</button>
 			</div>
-			<div className={styles['list-container']}>
-				<h2 className={styles['list-heading']}>Список:</h2>
+			<div className={css['list-container']}>
+				<h2 className={css['list-heading']}>Список:</h2>
 				{!list.length ? (
-					<p className={styles['no-margin-text']}>Нет добавленных элементов</p>
+					<p className={css['no-margin-text']}>Нет добавленных элементов</p>
 				) : (
-					<ul className={styles['list']}>
+					<ul className={css['list']}>
 						{list.map((item) => (
-							<li className={styles['list-item']} key={item.id}>{item.value} | {item.date}</li>
+							<li className={css['list-item']} key={item.id}>
+								{item.value} | {item.date}
+							</li>
 						))}
 					</ul>
 				)}
 			</div>
 		</div>
 	);
-};
+}
